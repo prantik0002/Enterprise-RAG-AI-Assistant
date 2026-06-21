@@ -1,34 +1,42 @@
 # Enterprise RAG AI Assistant
 
-Enterprise-grade Retrieval Augmented Generation (RAG) assistant built using:
+AI-powered document assistant built using:
 
 - FastAPI
 - React
 - ChromaDB
 - Sentence Transformers
 - Groq LLM
-- LangChain Text Splitters
+- Railway
+- Vercel
 
 ## Features
 
-- Upload PDFs
-- Semantic Search
-- Vector Database Retrieval
-- AI Question Answering
-- Source Attribution
+- Upload PDF documents
+- Automatic chunking
+- Vector embeddings
+- Semantic search
+- Retrieval Augmented Generation (RAG)
+- Source attribution
+- Hallucination reduction
 
-## Tech Stack
+## Live Demo
 
-Frontend:
-- React
-- Axios
-
-Backend:
-- FastAPI
-- ChromaDB
-- Sentence Transformers
-- Groq
+Link to the live demo:
+[https://enterprise-rag-ai-assistant-prantik.vercel.app/]
 
 ## Architecture
 
-PDF → Chunking → Embeddings → ChromaDB → Retrieval → Groq LLM → Answer
+PDF
+ ↓
+Chunking
+ ↓
+Embeddings
+ ↓
+ChromaDB
+ ↓
+Retriever
+ ↓
+Groq LLM
+ ↓
+Answer + Sources
