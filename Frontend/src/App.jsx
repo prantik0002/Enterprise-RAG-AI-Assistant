@@ -10,6 +10,7 @@ function App() {
   const [answer, setAnswer] = useState("");
   const [sources, setSources] = useState([]);
 
+  const API_URL = "https://enterprise-rag-ai-assistant.up.railway.app";
 
   const uploadFile = async () => {
 
@@ -22,7 +23,7 @@ function App() {
 
   const response =
     await axios.post(
-      "http://127.0.0.1:8000/upload",
+      `${API_URL}/upload`,
       formData
     );
 
@@ -36,7 +37,7 @@ function App() {
 
   const response =
     await axios.post(
-      "http://127.0.0.1:8000/ask",
+      `${API_URL}/ask`,
       {
         query: question
       }

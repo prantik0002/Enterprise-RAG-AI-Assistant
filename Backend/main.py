@@ -75,10 +75,6 @@ def ask(request: QueryRequest):
         search_results["documents"]
     )
 
-    # print("\n========== CONTEXT ==========\n")
-    # print(context)
-    # print("\n=============================\n")
-
     answer = generate_answer(
         request.query,
         context
