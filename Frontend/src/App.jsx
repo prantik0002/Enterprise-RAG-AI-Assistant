@@ -10,8 +10,7 @@ function App() {
   const [answer, setAnswer] = useState("");
   const [sources, setSources] = useState([]);
 
-  const API_URL = "https://enterprise-rag-ai-assistant.up.railway.app";
-
+  const API_URL = import.meta.env.VITE_API_URL;
   const uploadFile = async () => {
 
   const formData = new FormData();
