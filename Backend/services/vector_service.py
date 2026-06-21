@@ -56,7 +56,7 @@ def get_document_count():
 def search_chunks(query, n_results=3):
 
     # query_embedding = model.encode(query)
-    embeddings = get_model().encode(chunks)
+    query_embeddings = get_model().encode(query)
 
     results = collection.query(
         query_embeddings=[query_embedding.tolist()],
