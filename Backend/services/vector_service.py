@@ -2,9 +2,23 @@ from sentence_transformers import SentenceTransformer
 import chromadb
 
 
-model = SentenceTransformer(
-    "all-MiniLM-L6-v2"
-)
+# model = SentenceTransformer(
+#     "all-MiniLM-L6-v2"
+# )
+
+_model = None
+
+
+def get_model():
+
+    global _model
+
+    if _model is None:
+        _model = SentenceTransformer(
+            "all-MiniLM-L6-v2"
+        )
+
+    return _model
 
 client = chromadb.PersistentClient(
     path="./chroma_db"
@@ -15,7 +29,8 @@ collection = client.get_or_create_collection(
 )
 def store_chunks(chunks):
 
-    embeddings = model.encode(chunks)
+    # embeddings = model.encode(chunks)
+    embeddings = get_model().encode(chunks)
 
     ids = []
 
@@ -40,7 +55,8 @@ def get_document_count():
     return collection.count()
 def search_chunks(query, n_results=3):
 
-    query_embedding = model.encode(query)
+    # query_embedding = model.encode(query)
+    embeddings = get_model().encode(chunks)
 
     results = collection.query(
         query_embeddings=[query_embedding.tolist()],
