@@ -9,9 +9,18 @@ function App() {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
   const [sources, setSources] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [uploadLoading, setUploadLoading] = useState(false);
 
   const API_URL = import.meta.env.VITE_API_URL;
   const uploadFile = async () => {
+
+  if (!file) return;
+
+  setUploadResult(null);
+  setUploadLoading(true);
+
+  try {
 
   const formData = new FormData();
 
@@ -29,10 +38,28 @@ function App() {
   setUploadResult(
   response.data
   );
+  } catch (error) {
+
+    console.error(error);
+
+  } finally {
+
+    setUploadLoading(false);
+
+  }
   };
 
 
   const askQuestion = async () => {
+
+  if (!question.trim()) return;                       
+
+  setAnswer("");
+  setSources([]);
+
+  setLoading(true);
+
+  try {
 
   const response =
     await axios.post(
@@ -49,6 +76,19 @@ function App() {
   setSources(
     response.data.sources
   );
+   } catch (error) {
+
+    console.error(error);
+
+    setAnswer(
+      "Something went wrong while generating the answer."
+    );
+
+  } finally {
+
+    setLoading(false);
+
+  }
 };
 
   
@@ -91,15 +131,47 @@ return (
         <p className="upload-hint">
           PDF files only
         </p>
-
+            
+            {
+    file && (
+      <p className="selected-file">
+        Selected:
+        {" "}
+        <strong>
+          {file.name}
+        </strong>
+      </p>
+    )
+  }
       </div>
 
       <button
         className="primary-btn"
         onClick={uploadFile}
+        disabled={uploadLoading}
       >
-        Upload
+        {
+          uploadLoading
+            ? "Processing..."
+            : "Upload"
+        }
       </button>
+      
+        {
+  uploadLoading && (
+
+    <div className="loading-container">
+
+      <div className="spinner"></div>
+
+      <p>
+        Extracting content and building knowledge base...
+      </p>
+
+    </div>
+
+  )
+}
 
       {
         uploadResult && (
@@ -165,8 +237,9 @@ return (
         <button
           className="primary-btn"
           onClick={askQuestion}
+          disabled={loading}
         >
-          Ask
+          {loading ? "Thinking..." : "Ask"}
         </button>
 
       </div>
@@ -179,7 +252,7 @@ return (
 
       <h2>🤖 AI Answer</h2>
 
-      <div className="answer-box">
+      {/* <div className="answer-box">
 
         {
           answer
@@ -187,7 +260,30 @@ return (
             : "No answer yet."
         }
 
-      </div>
+      </div> */}
+      <div className="answer-box">
+
+        {loading ? (
+
+          <div className="loading-container">
+
+            <div className="spinner"></div>
+
+            <p>
+              Searching knowledge base...
+            </p>
+
+            </div>
+
+  ) : (
+
+    answer
+      ? answer
+      : "No answer yet."
+
+  )}
+
+</div>
 
     </div>
 
